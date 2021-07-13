@@ -6,6 +6,9 @@ use PHPUnit\Framework\TestCase;
 use DifferDev\Web\Input;
 use DifferDev\Web\Output;
 use DifferDev\Web\Interfaces\IOText;
+use DifferDev\Web\IODecorators\RemoveHTML;
+use DifferDev\Web\IODecorators\RemoveQuotes;
+use DifferDev\Web\IODecorators\RemoveSpaces;
 
 class DecoratorTest extends TestCase
 {
@@ -16,8 +19,13 @@ class DecoratorTest extends TestCase
     public function setUp(): void
     {
         $this->input = new Input();
+        $this->input = new RemoveSpaces($this->input);
+        $this->input = new RemoveQuotes($this->input);
+        $this->input = new RemoveHTML($this->input);
 
         $this->output = new Output();
+        $this->output = new RemoveHTML($this->output);
+        $this->output = new RemoveSpaces($this->output);
     }
 
     public function testCheckGetTextValueForInput()
